@@ -52,12 +52,16 @@ int main(){
     int t; cin >> t;
     while(t--){
         cin >> n >> base;
-        
+        if(n == 0){
+            cout << 1 << endl;
+            continue;
+        }
         matrix x;
         x.a[0][0] = 1; x.a[0][1] = 1;
         x.a[1][0] = 1; x.a[1][1] = 0;
-        matrix ans =  binpow(x, n + 1);
-        cout << ans.a[1][0] % base << endl;
+        matrix ans =  binpow(x, n);
+        
+        cout << (ans.a[1][0] + ans.a[1][1]) % base << endl;
     }
     return 0;
 }

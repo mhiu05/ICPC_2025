@@ -17,10 +17,20 @@ const int MAXN = 1e5 + 5;
 
 using namespace std;
 
+// định lý talet + diện tích tam giác cân chứng minh được:
+// h_x = sqrt(x / N) . H
+
 int main(){
     faster;
 
-    
+    int t; cin >> t; 
+    while(t--){
+        ll N, H; cin >> N >> H;
+        for(int i = 1; i <= N - 1; ++i){
+            cout << fixed << setprecision(6) << sqrt(1.0 * i / N) * 1.0 * H << " ";
+        }
+        cout << endl;
+    }
 
     return 0;
 }
