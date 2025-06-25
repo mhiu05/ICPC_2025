@@ -37,8 +37,8 @@ int main(){
     int t; cin >> t;
     while(t--){
         cin >> n;
-        for(int i = 1; i <= n; ++i){
-            for(int j = 1; j <= n; ++j){
+        FOR(i, 1, n){
+            FOR(j, 1, n){
                 cin >> a[i][j];
             }
         }

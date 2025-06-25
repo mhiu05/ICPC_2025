@@ -17,10 +17,26 @@ const int MAXN = 1e5 + 5;
 
 using namespace std;
 
+// dp markov: Quy hoạch động tính kỳ vọng
+// không hiểu công thức
+
+double dp[101][101][101];
+
 int main(){
     faster;
 
-    
+    int A, B, C;
+    cin >> A >> B >> C;
 
+    FOD(i, 99, 0){
+        FOD(j, 99, 0){
+            FOD(k, 99, 0){
+                int T = i + j + k;
+                dp[i][j][k] = (T + i * dp[i+1][j][k] + j * dp[i][j+1][k] + k * dp[i][j][k+1]) / T;
+            }
+        }
+    }
+
+    cout << fixed << setprecision(6) << dp[A][B][C] << "\n";
     return 0;
 }
