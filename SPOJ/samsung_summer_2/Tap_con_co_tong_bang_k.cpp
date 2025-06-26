@@ -17,30 +17,27 @@ const int MAXN = 1e5 + 5;
 
 using namespace std;
 
-
-void solve(ll n){
-    queue<pair<string, ll>> q;
-    q.push({"9", 9 % n});
-    while(!q.empty()){
-        string s = q.front().fi;
-        ll r = q.front().sc;
-        q.pop();
-        if(r == 0){
-            cout << s << endl;
-            return;
-        }
-        q.push({s + "0", (10*r + 0) % n});
-        q.push({s + "9", (10*r + 9) % n});
-    }
-}
-
 int main(){
     faster;
 
     int t; cin >> t;
     while(t--){
-        ll n; cin >> n;
-        solve(n);
+        int n, k; cin >> n >> k;
+        int a[n + 1];
+        FOR(i, 1, n){
+            cin >> a[i];
+        }
+        int dp[10001] = {0};
+        dp[0] = 1;
+        FOR(j, 1, n){
+            FOD(i, k, a[j]){
+                if(dp[i - a[j]]){
+                    dp[i] = 1;
+                }
+            }
+        }
+        if(dp[k]) cout << "YES\n";
+        else cout << "NO\n";
     }
 
     return 0;

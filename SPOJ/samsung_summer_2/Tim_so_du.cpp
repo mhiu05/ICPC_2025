@@ -17,21 +17,15 @@ const int MAXN = 1e5 + 5;
 
 using namespace std;
 
+// 2,3,4 % 5 quy luật chu kỳ 4
 
-void solve(ll n){
-    queue<pair<string, ll>> q;
-    q.push({"9", 9 % n});
-    while(!q.empty()){
-        string s = q.front().fi;
-        ll r = q.front().sc;
-        q.pop();
-        if(r == 0){
-            cout << s << endl;
-            return;
-        }
-        q.push({s + "0", (10*r + 0) % n});
-        q.push({s + "9", (10*r + 9) % n});
+int module(string s){
+    ll x = 0;
+    for(char c : s){
+        x = 10*x + (c - '0');
+        x %= 4;
     }
+    return x % 4;
 }
 
 int main(){
@@ -39,8 +33,20 @@ int main(){
 
     int t; cin >> t;
     while(t--){
-        ll n; cin >> n;
-        solve(n);
+        string s; cin >> s;
+
+        int dk = module(s);
+
+        if(dk == 1){
+            cout << (1 + 2 + 3 + 4) % 5 << endl;
+        }
+        else if(dk == 2){
+            cout << (1 + 4 + 4 + 1) % 5 << endl; 
+        }
+        else if(dk == 3){
+            cout << (1 + 3 + 2 + 4) % 5 << endl;
+        }
+        else cout << (1 + 1 + 1 + 1) % 5 << endl;
     }
 
     return 0;

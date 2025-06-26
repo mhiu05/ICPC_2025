@@ -1,1 +1,0 @@
-{"name":"Local: Chia_tam_giac","url":"d:\\New folder\\ICPC_2025\\SPOJ\\samsung_summer_1\\Chia_tam_giac.cpp","tests":[{"id":1750849019478,"input":"2\n\n3 2\n\n2 100000","output":"1.154701 1.632993\n\n70710.678119"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\New folder\\ICPC_2025\\SPOJ\\samsung_summer_1\\Chia_tam_giac.cpp","group":"local","local":true}
