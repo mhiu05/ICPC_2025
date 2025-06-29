@@ -149,6 +149,7 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "valarray": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "bo_ba_so_pytago": "cpp"
   }
 }

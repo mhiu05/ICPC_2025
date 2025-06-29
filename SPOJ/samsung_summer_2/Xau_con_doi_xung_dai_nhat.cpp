@@ -17,6 +17,8 @@ const int MAXN = 1e5 + 5;
 
 using namespace std;
 
+//version O(n^2)
+
 int dp[5005][5005];
 
 void solve(string s){
