@@ -14,15 +14,27 @@
 
 const ll MOD = 1e9 + 7;
 const int MAXN = 1e5 + 5;
-const double EPS = 1e-10;
-const int INF = 1e9;
 
 using namespace std;
 
-signed main(){
+int main(){
     faster;
 
-    
+    int t; cin >> t;
+    while(t--){
+        string s; cin >> s;
+        ll b_cnt = 0, ans = 0;
+        FOD(i, s.sz() - 1, 0){
+            if(s[i] == 'b') ++b_cnt;
+            else{
+                ans += b_cnt;
+                ans %= MOD;
+                b_cnt = 2 * b_cnt;
+                b_cnt %= MOD;
+            }
+        }
+        cout << ans << endl;
+    }
 
     return 0;
 }

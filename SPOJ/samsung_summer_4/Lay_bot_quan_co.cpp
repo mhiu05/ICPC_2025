@@ -19,10 +19,23 @@ const int INF = 1e9;
 
 using namespace std;
 
+// ai đến được thứ c - i * (m + 1) là win
+
+void solve(int c, int m){
+    if(c % (m + 1) == 0){
+        cout << "Second\n";
+    }
+    else cout << "First\n";
+}   
+
 signed main(){
     faster;
 
-    
+    int t; cin >> t;
+    while(t--){
+        int c, m; cin >> c >> m;
+        solve(c, m);
+    }
 
     return 0;
 }

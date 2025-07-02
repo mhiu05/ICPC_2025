@@ -19,10 +19,31 @@ const int INF = 1e9;
 
 using namespace std;
 
+// Nin game & Định lý Sprague - Grundy: https://wiki.vnoi.info/algo/math/game-theory.md
+
 signed main(){
     faster;
 
-    
+    int t; cin >> t;
+    while(t--){
+        int n; cin >> n;
+        int a[n + 1], b[n + 1];
+        FOR(i, 1, n) cin >> a[i];
+        FOR(i, 1, n) cin >> b[i];
+
+        int grundy[MAXN];
+        FOR(i, 1, n){
+            grundy[i] = a[i] % (b[i] + 1);
+        }
+        int ok = grundy[1];
+        FOR(i, 2, n){
+            ok ^= grundy[i];
+        }
+        if(ok == 0){
+            cout << "Second\n";
+        }
+        else cout << "First\n";
+    }
 
     return 0;
 }
