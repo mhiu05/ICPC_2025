@@ -19,7 +19,7 @@ const int INF = 1e9;
 
 using namespace std;
 
-// DSU
+// thuật toán DSU
 
 int n, m; 
 int Size[MAXN]; // số đỉnh trong tập hợp
