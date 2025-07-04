@@ -151,5 +151,6 @@
     "valarray": "cpp",
     "variant": "cpp",
     "bo_ba_so_pytago": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }
