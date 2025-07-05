@@ -1,0 +1,1 @@
+{"name":"Local: qua_mon","url":"d:\\Code DSA\\ICPC_2025\\SPOJ\\samsung_2019_r1\\qua_mon.cpp","tests":[{"id":1751684005568,"input":"5 4\n3 1 5 2 4\n0 1\n4 2\n2 8\n9 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code DSA\\ICPC_2025\\SPOJ\\samsung_2019_r1\\qua_mon.cpp","group":"local","local":true}
