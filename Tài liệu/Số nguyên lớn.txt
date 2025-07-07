@@ -13,7 +13,7 @@ string add(string a, string b){
         carry = x / 10;
         ans = to_string(kq) + ans;
     }
-    if (carry != 0) ans = to_string(carry) + ans;
+    if (carry != 0) ans = (carry + '0') + ans;
     return ans;
 }
 
