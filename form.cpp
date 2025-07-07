@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #define ll long long
+//#define int long long
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
-//#define int long long
 #define all(x) x.begin(), x.end()
 #define pb push_back
 #define sz size

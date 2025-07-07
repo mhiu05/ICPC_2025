@@ -1,1 +1,0 @@
-{"name":"Local: Aiur","url":"d:\\New folder\\ICPC_2025\\SPOJ\\samsung_2018_r1\\Aiur.cpp","tests":[{"id":1751704576798,"input":"3\n0 0 4 6 0 0 4 0 0\n0 7 4 6 0 0 4 0 0 \n-50 45 4 6 0 0 4 0 0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\New folder\\ICPC_2025\\SPOJ\\samsung_2018_r1\\Aiur.cpp","group":"local","local":true}
