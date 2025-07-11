@@ -23,7 +23,24 @@ using namespace std;
 signed main(){
     faster;
 
-    
+    string a, b; cin >> a >> b;
+
+    // ít nhất 1 lần :)
+    if(b == a){
+        cout << "No";
+        return 0;
+    }
+
+    while(b.sz() > a.sz()){
+        if(b.front() == 'A') b = b.substr(1);
+        else{
+            b = b.substr(1);
+            reverse(b.begin(), b.end());
+        }    
+    }
+
+    if(b == a) cout << "Yes";
+    else cout << "No";
 
     return 0;
 }

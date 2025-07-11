@@ -23,7 +23,18 @@ using namespace std;
 signed main(){
     faster;
 
-    
+    int n; cin >> n;
+    int a[2*n + 1];
+    FOR(i, 1, 2*n) cin >> a[i];
 
+    int cnt1 = 0, cnt2= 0;
+    FOR(i, 1,  2*n){
+        // dạng 010101....
+        if((i % 2 == 1 && a[i] != 0) || (i % 2 == 0 && a[i] != 1)) ++ cnt1;
+
+        // dạng 101010....
+        if((i % 2 == 1 && a[i] != 1) || (i % 2 == 0 && a[i] != 0)) ++cnt2;
+    }
+    cout << min(cnt1, cnt2) / 2;
     return 0;
 }
