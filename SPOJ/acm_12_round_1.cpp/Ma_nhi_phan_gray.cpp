@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #define ll long long
+// #define int long long
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
-#define int long long
 #define all(x) x.begin(), x.end()
 #define pb push_back
 #define sz size
@@ -20,25 +20,24 @@ const int INF = 1e9;
 
 using namespace std;
 
+// Công thức chuyển từ nhị phân sang gray: Gray(n) = n ^ (n >> 1)
+
+void print(int gray, int n){
+    FOD(i, n - 1, 0){
+        cout << ((gray >> i) & 1);
+    }
+}
+
 signed main(){
     faster;
 
     int n; cin >> n;
-    int a[n + 5];
-    FOR(i, 1, n) cin >> a[i];
-    
-    int j_2 = 1, j_24 = 1;
-    vi dp(n + 5, 0);
-    FOR(i, 1, n){
-        while(j_2 <= i && a[i] - a[j_2] > 119) j_2++;
-        while(j_24 <= i && a[i] - a[j_24] > 1439) j_24++;
-        
-        ll cost1 = dp[i-1] + 6000;
-        ll cost2 = dp[j_2-1] + 15000;
-        ll cost3 = dp[j_24-1] + 40000;
-
-        dp[i] = min({cost1, cost2, cost3});
+    int k = n;
+    FOR(i, 0, (1 << n) - 1){
+        int gray = i ^ (i >> 1);
+        print(gray, n);
+        cout << endl;
     }
-    FOR(i, 1, n) cout << dp[i] - dp[i - 1] << " ";
+
     return 0;
 }

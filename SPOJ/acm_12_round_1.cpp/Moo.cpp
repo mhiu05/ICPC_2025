@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #define ll long long
+// #define int long long
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
-#define int long long
 #define all(x) x.begin(), x.end()
 #define pb push_back
 #define sz size
@@ -20,25 +20,39 @@ const int INF = 1e9;
 
 using namespace std;
 
+ll F[100]; //  độ dài của S_i
+void sieve(){
+    F[0] = 3;
+    FOR(i, 1, 99){
+        F[i] = 2*F[i - 1] + i + 3;
+    }
+}
+
+char solve(ll n, int k){
+    if(k == 0){
+        if(n == 1) return 'm';
+        else return 'o';
+    }
+    if(n <= F[k - 1]) return solve(n, k - 1);
+    else if(n <= F[k - 1] + k + 3){
+        if(n == F[k - 1] + 1) return 'm';
+        else return 'o';
+    }
+    else return solve(n - F[k - 1] - k - 3, k - 1);
+}
+
+
 signed main(){
     faster;
-
-    int n; cin >> n;
-    int a[n + 5];
-    FOR(i, 1, n) cin >> a[i];
+    sieve();
     
-    int j_2 = 1, j_24 = 1;
-    vi dp(n + 5, 0);
-    FOR(i, 1, n){
-        while(j_2 <= i && a[i] - a[j_2] > 119) j_2++;
-        while(j_24 <= i && a[i] - a[j_24] > 1439) j_24++;
-        
-        ll cost1 = dp[i-1] + 6000;
-        ll cost2 = dp[j_2-1] + 15000;
-        ll cost3 = dp[j_24-1] + 40000;
+    int n; cin >> n;
 
-        dp[i] = min({cost1, cost2, cost3});
-    }
-    FOR(i, 1, n) cout << dp[i] - dp[i - 1] << " ";
+    int k = 0;
+    while(F[k] < n) k++; 
+
+    cout << solve(n, k);
+    
+
     return 0;
 }

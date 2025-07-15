@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #define ll long long
+// #define int long long
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
-#define int long long
 #define all(x) x.begin(), x.end()
 #define pb push_back
 #define sz size
@@ -14,31 +14,41 @@
 #define faster ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
 
 const ll MOD = 1e9 + 7;
-const int MAXN = 1e5 + 5;
+const int MAXN = 20005;
 const double EPS = 1e-10;
 const int INF = 1e9;
 
 using namespace std;
 
+// duyệt trâu
+
+int covered[MAXN][MAXN];
+int offset = 1e4;
+
 signed main(){
     faster;
 
     int n; cin >> n;
-    int a[n + 5];
-    FOR(i, 1, n) cin >> a[i];
-    
-    int j_2 = 1, j_24 = 1;
-    vi dp(n + 5, 0);
-    FOR(i, 1, n){
-        while(j_2 <= i && a[i] - a[j_2] > 119) j_2++;
-        while(j_24 <= i && a[i] - a[j_24] > 1439) j_24++;
-        
-        ll cost1 = dp[i-1] + 6000;
-        ll cost2 = dp[j_2-1] + 15000;
-        ll cost3 = dp[j_24-1] + 40000;
+    FOR(i, 0, n - 1){
+        int x1, y1, x2, y2; cin >> x1 >> y1 >> x2 >> y2;
 
-        dp[i] = min({cost1, cost2, cost3});
+        if(x1 > x2) swap(x1, x2);
+        if(y1 > y2) swap(y1, y2);
+ 
+        FOR(x, x1, x2 - 1){
+            FOR(y, y1, y2 - 1){
+                covered[x + offset][y + offset] = 1;
+            }
+        }
     }
-    FOR(i, 1, n) cout << dp[i] - dp[i - 1] << " ";
+
+    int ans = 0;
+    FOR(i, 0, MAXN - 1){
+        FOR(j, 0, MAXN - 1){
+            if(covered[i][j]) ++ans;
+        }
+    }
+    cout << ans;
+
     return 0;
 }
