@@ -1,0 +1,1 @@
+{"name":"Local: B5","url":"d:\\contest\\B5.cpp","tests":[{"id":1753516548509,"input":"11\n\n95 75\n\n27 6\n\n93 5\n\n124 13\n\n34 49\n\n65 61\n\n81 49\n\n77 33\n\n110 50\n\n91 22\n\n110 25\n\n57 42 97 36 2\n\n31 25\n\n25 25","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\contest\\B5.cpp","group":"local","local":true}
