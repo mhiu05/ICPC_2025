@@ -150,7 +150,9 @@
     "typeinfo": "cpp",
     "valarray": "cpp",
     "variant": "cpp",
-    "bo_ba_so_pytago": "cpp"
+    "bo_ba_so_pytago": "cpp",
+    "flat_map": "cpp",
+    "flat_set": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

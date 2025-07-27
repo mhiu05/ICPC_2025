@@ -1,0 +1,65 @@
+- Lý thuyết: https://codedream.edu.vn/thuat-toan-hash-so-khop-chuoi/
+
++ base: cơ số chọn là số nguyên tố hợp lý
++ mu[i]: lưu giá trị base^i % MOD
+
++ H_i: Mã hash của S(1 -> i): H_i = H_(i - 1) * base + S_i
+    VD: abcd = abc * base + d
+
++ Mã hash của S(l -> r): hash = H_r - H_(l - 1) * mu[r - l + 1]
+    VD: Xét abcdefghi: cde = abcde - abc * base^3
+
+- Bài tập:
++ Đề 1: Cho một xâu (S) và một xâu (T) chỉ gồm các ký tự từ (a) đến (z).
+        Kiểm tra xem xâu (T) xuất hiện trong xâu (S) tại những vị trí nào?
+
++ Code:
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAXN 1000005
+#define base 31
+#define MOD1 111539786
+#define MOD2 1000000007
+
+long long h1[MAXN], mu1[MAXN], h2[MAXN], mu2[MAXN];
+string s, t;
+vector<int> kq;
+long long getHash1(int l, int r){
+	return (h1[r] - h1[l-1]*mu1[r-l+1]%MOD1 + MOD1)%MOD1;
+}
+long long getHash2(int l, int r){
+	return (h2[r] - h2[l-1]*mu2[r-l+1]%MOD2 + MOD2)%MOD2;
+}
+int main() {
+	cin>>s>>t;
+	//Thêm ký tự # vào đầu để các ký tự được đánh số từ 1.
+	s="#"+s;
+
+	//Chuẩn bị mảng H
+	mu1[0]=1; mu2[0]=1;
+	for(int i = 1; i < s.size(); i++){
+		h1[i] = (h1[i-1]*base + (s[i]-'a'+1)) % MOD1;
+		mu1[i]= (mu1[i-1]*base) % MOD1;
+		h2[i] = (h2[i-1]*base + (s[i]-'a'+1)) % MOD2;
+		mu2[i]= (mu2[i-1]*base) % MOD2;
+	}
+
+	//Tính mã Hash của T
+	long long hashT1 = 0, hashT2 = 0;
+	for(int i = 0; i < t.size(); i++){
+		hashT1 = (hashT1*base + (t[i]-'a'+1)) % MOD1;
+		hashT2 = (hashT2*base + (t[i]-'a'+1)) % MOD2;
+	}
+
+	//So khớp
+	for(int i = 1; i < s.size() - t.size() + 1; i++){
+		long long h1 = getHash1(i, i+t.size()-1);
+		long long h2 = getHash2(i, i+t.size()-1);
+		if(hashT1 == h1 && hashT2 == h2)
+			kq.push_back(i);
+	}
+	for(int i = 0; i<kq.size(); i++)
+		cout<<kq[i]<<" ";
+	return 0;
+}
