@@ -1,4 +1,9 @@
-Phi(N): Số nguyên tố cùng nhau với N trong đoạn [1, N]
+1: Công thức legendre Tìm số m lớn nhất sao cho n! chia hết k^m, n và k cho trước
+
+
+
+
+2: Phi hàm euler: Phi(N): Số nguyên tố cùng nhau với N trong đoạn [1, N]
 
 Phi(N) = n * (1 - 1 / p) với mọi p là các ước nguyên tố của N
 // = n (1-1/p1) ... (1-1/pn)
