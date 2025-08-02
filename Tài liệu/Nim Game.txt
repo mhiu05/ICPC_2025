@@ -11,7 +11,7 @@ https://wiki.vnoi.info/algo/math/game-theory.md
 * VD1: ứng dụng giá trị nim
 Đề: Cho dãy số A[] có N phần tử. Có hai đối thủ chơi lần lượt. Mỗi lượt, người chơi sẽ chọn lấy một số thứ i (A[i]) 
 và trừ đi số này giá trị trong khoảng 1 đến B[i]. Người thắng cuộc là có nước đi cuối cùng.
-Code: samsung_summer_4\tro_choi_tru_dan.cpp
+Code: SPOJ\samsung_summer_4\tro_choi_tru_dan.cpp
 
 * VD2: Biến thể fibonacci Nim
 Đề: Người 1: A, người 2: B
@@ -19,4 +19,4 @@ Code: samsung_summer_4\tro_choi_tru_dan.cpp
 2: Mỗi lượt người chơi bốc ít nhất 1 và nhiều nhất 2 lần viên sỏi người trước vừa bốc, lượt đầu A có thể bốc bao nhiêu tùy ý
 3: Người chơi nào lấy viên sỏi cuối cùng là win
 Solution: Nếu n là số fibonacci thì in ra n, không thì lấy n trừ số fibonacci lớn nhất < n cho đến khi n là số fibonacci
-Code: Contest_ICPC_2025\Contest_1\solution\E.cpp
+Code: Contest_ICPC_2025\Contest_1\E.cpp

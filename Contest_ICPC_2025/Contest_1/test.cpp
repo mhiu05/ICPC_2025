@@ -14,33 +14,38 @@
 #define faster ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
 
 const ll MOD = 1e9 + 7;
-const int MAXN = 1e5 + 5;
+const int MAXN = 1e5;
 const double EPS = 1e-10;
 const int INF = 1e9;
 
 using namespace std;
 
-// Đề: Tìm số ước của C[n][k], 0 <= k <= n <= 500, dữ liệu đảm bảo 64 bit
-
-int mx = 500;
 int a[MAXN + 5];
 vi num;
+
 void snt() {
-    for(int i = 0; i < MAXN; i++) {
+    for(int i = 0; i <= MAXN; i++) {
         a[i] = 1;
     }
     a[0] = a[1] = 0;
-    for(int i = 2; i <= 1000; i++) {
+    for(int i = 2; i <= MAXN; i++) {
         if(a[i]) {
             num.push_back(i);
-            for(int j = i * 2; j <= MAXN; j += i) {
+            for(int j = i * i; j <= MAXN; j += i) {
                 a[j] = 0;
             }
         }
     }
-
 }
 
+int legendre(int n, int p) {
+    int res = 0;
+    while (n > 0) {
+        n /= p;
+        res += n;
+    }
+    return res;
+}
 
 signed main(){
     faster;
@@ -48,23 +53,16 @@ signed main(){
     
     int n, k;
     while(cin >> n >> k) {
-        int r = min(k, n - k);
-        ll res= 1;
-        for(int x: num) {
+        ll res = 1;
+        for(int x : num) {
             if(x > n) break;
-            ll cnt = 0;
-            ll tmp = x;
-            while(tmp <= n) {
-                cnt += n / tmp;
-                cnt -= k / tmp;
-                cnt -= (n - k) /tmp;
-                tmp *= x;
-
-            }
-            res *= (cnt + 1);
+            int cnt = 0;
+            cnt += legendre(n, x);
+            cnt -= legendre(n - k, x);
+            cnt -= legendre(k, x);
+            res *= (ll)(cnt + 1); // Explicit cast to long long
         }
         cout << res << '\n';
-        
     }
     return 0;
 }

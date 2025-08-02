@@ -30,21 +30,17 @@ signed main(){
     faster;
 
     int n; cin >> n;
-    int a[n + 1], b[n + 1];
-    FOR(i, 0, n - 1){
-        cin >> a[i];
-        b[i] = -a[i];
-    }
+    int a[n + 1];
+    FOR(i, 1, n) cin >> a[i];
 
-    vi c;
-    FOR(i, 0, n - 1){
-        auto it = upper_bound(all(c), b[i]);
-        if(it == c.end()){
-            c.pb(b[i]);
-        }
-        else *it = b[i];
+    int maxx = 0;
+    int b[n + 1];
+    FOR(i, 1, n){
+        int j = upper_bound(b + 1, b + maxx + 1, a[i], greater<int>()) - b - 1;
+        b[j + 1] = a[i];
+        maxx = max(maxx, j + 1);
     }
-
-    cout << c.sz();
+    cout << maxx;
+    
     return 0;
 }

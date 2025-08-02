@@ -28,9 +28,6 @@ using namespace std;
 // 3. Cộng 3 vào A, khi đó A = 5 và B = 5
 // Hãy tính số phép tính tối thiểu cần thiết để làm cho A và B bằng nhau.
 
-// Input:
-// Dòng đầu tiên chứa số lượng bộ test T (T ≤ 100).
-// Mỗi test gồm hai số nguyên A và B (1 ≤ A, B ≤ 109).
 
 signed main(){
     faster;
