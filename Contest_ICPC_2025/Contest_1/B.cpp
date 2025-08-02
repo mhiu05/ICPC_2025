@@ -4,7 +4,7 @@ using namespace std;
 static const int MOD   = 1000000007;
 static const int ALPHA = 26;
 
-// Cre: ChatGPT (Đã AC)
+// Cre: ChatGPT (Đã AC, chưa hiểu)
 // https://wiki.vnoi.info/vi/algo/string/aho-corasick
 
 struct Aho {
@@ -84,7 +84,7 @@ struct Aho {
         }
     }
 };
-n
+
 
 int main(){
     ios::sync_with_stdio(false);

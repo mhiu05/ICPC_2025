@@ -2,6 +2,8 @@
 using namespace std;
 using ll = long long;
 
+// Cre: ChatGPT (Đã AC, chưa hiểu)
+
 // Fenwick Tree 1-indexed
 struct Fenwick {
     int n;

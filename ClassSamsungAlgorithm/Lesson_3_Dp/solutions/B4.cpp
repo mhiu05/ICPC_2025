@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Cre: Chat GPT (Đã AC, chưa hiểu)
+
 struct Big {
     static const uint32_t BASE = 1000000000;
     vector<uint32_t> d;

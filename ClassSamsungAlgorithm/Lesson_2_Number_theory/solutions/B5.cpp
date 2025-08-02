@@ -6,6 +6,8 @@ using namespace std;
 
 typedef long long ll;
 
+// Cre: ChatGPT (Đã AC, chưa hiểu)
+
 // bao hàm loại trừ: Đếm số lượng số <= x bị xóa (chia hết cho ít nhất 1 số trong a[])
 // count = Tổng các số chia hết cho all số trong a[] - các số chia hết cho cả 2 số + các số chia hết cho cả 3 số .......
 // count = (-1)^(|S| + 1) * [x / lcm(S)] vứi mọi S tập con a[], S khác rỗng

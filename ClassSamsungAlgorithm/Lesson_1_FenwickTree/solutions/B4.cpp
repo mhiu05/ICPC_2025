@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Cre: ChatGPT (Đã AC, chưa hiểu)
+
 const int MAXN = 105;
 int N; // Kích thước ma trận N x N x N
 long long bit[MAXN][MAXN][MAXN]; // Fenwick Tree 3D
