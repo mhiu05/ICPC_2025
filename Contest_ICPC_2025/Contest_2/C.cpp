@@ -2,6 +2,8 @@
 using namespace std;
 using ll = long long;
 
+// ChatGPT (Đã AC)
+
 struct Point {
     double x, y;
 };

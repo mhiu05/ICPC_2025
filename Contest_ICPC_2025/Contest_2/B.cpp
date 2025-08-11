@@ -14,31 +14,35 @@
 #define faster ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
 
 const ll MOD = 1e9 + 7;
-const int MAXN = 1e5 + 5;
+const int MAXN = 2e5 + 5;
 const double EPS = 1e-10;
 const int INF = 1e9;
 
 using namespace std;
 
-int scp(int n){
-    int can = sqrt(n);
-    return can * can == n;
-}
-
 signed main(){
     faster;
 
-    int a; cin >> a;
+    deque<int> dq;
+    int n; cin >> n;
+    int a[MAXN];
+    FOR(i, 1, n){
+        cin >> a[i];
+        if(i % 2 == 0) dq.push_front(a[i]);
+        else dq.push_back(a[i]);
+    }
 
-    int check = 0;
-    FOR(i, 1, MAXN){
-        int X = 2*a*a - i * i;
-        if(X > 1e10) continue;
-        if(X >= 1 && scp(X) && i != a && sqrt(X) != a && i != sqrt(X)){
-            check = 1;
+    if(n % 2 == 0){
+        while(!dq.empty()){
+            cout << dq.front() << " ";
+            dq.pop_front();
         }
     }
-    if(check) cout << "YES";
-    else cout << "NO";
+    else{
+        while(!dq.empty()){
+            cout << dq.back() << " ";
+            dq.pop_back();
+        }
+    }
     return 0;
 }
