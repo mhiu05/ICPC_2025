@@ -2,7 +2,7 @@
 #define ll long long
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
-//#define int long long
+#define int long long
 #define pb push_back
 #define sz size
 #define vi vector<int>
@@ -75,7 +75,7 @@ int main(){
             (__int128)3 * ans.a[0][1] +
             (__int128)2 * ans.a[0][2] +
             (__int128)1 * ans.a[0][3]
-        ) % mod;
+        ) % MOD;
         cout << kq << endl;
     }
 

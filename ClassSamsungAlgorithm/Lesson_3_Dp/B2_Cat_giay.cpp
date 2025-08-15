@@ -4,6 +4,7 @@
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
 #define all(x) x.begin(), x.end()
+#define pf push_front
 #define pb push_back
 #define sz size
 #define vi vector<int>
@@ -20,11 +21,14 @@ const int INF = 1e9;
 
 using namespace std;
 
-int check(int X, int a, int b, int e, vvi &dp){
-    FOR(i, 1, a - X + 1){
-        FOR(j, 1, b - X + 1){
-            int u = i + X - 1, v = j + X - 1;
-            int sum = dp[u][v] + dp[i - 1][j - 1] - dp[i - 1][v] - dp[u][j - 1];
+int a, b,c, d, e;
+int dp[6001][6001];
+
+int check(int len){
+    FOR(i, 1, a - len + 1){
+        FOR(j, 1, b - len + 1){
+            int u = i + len - 1, v = j + len - 1;
+            int sum = dp[u][v] - dp[i - 1][v] - dp[u][j - 1] + dp[i - 1][j - 1];
             if(sum <= e) return 1;
         }
     }
@@ -34,8 +38,7 @@ int check(int X, int a, int b, int e, vvi &dp){
 signed main(){
     faster;
 
-    int a, b, c, d, e; cin >> a >> b >> c >> d >> e;
-    vvi dp(a + 1, vi(b + 1, 0));
+    cin >> a >> b >> c >> d >> e;
 
     FOR(i, 1, c){
         int x, y; cin >> x >> y;
@@ -44,22 +47,21 @@ signed main(){
 
     FOR(i, 1, a){
         FOR(j, 1, b){
-            dp[i][j] = dp[i - 1][j] + dp[i][j - 1] + dp[i][j] - dp[i - 1][j - 1];
+            dp[i][j] = dp[i][j] + dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1];
         }
     }
 
-    int ans = 0;
-    int l = 1, r = min(a, b);
+    int l = 1, r = min(a, b) / d, max_len = 0;
     while(l <= r){
         int m = (l + r) / 2;
-        int X = m * d;
-        if(check(X, a, b, e, dp)){
+        if(check(m * d)){
+            max_len = m * d;
             l = m + 1;
-            ans = X;
         }
         else r = m - 1;
     }
-    cout << ans;
+
+    cout << max_len;
 
     return 0;
 }
