@@ -4,6 +4,7 @@
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
 #define all(x) x.begin(), x.end()
+#define pf push_front
 #define pb push_back
 #define sz size
 #define vi vector<int>
@@ -20,25 +21,20 @@ const int INF = 1e9;
 
 using namespace std;
 
-int n, base;
+int n, base; 
 
 struct matrix{
-    int a[3][3] = {
-        {1, 2, 3},
-        {1, 0, 0},
-        {0, 1, 0}
-    };
-    
-    friend matrix operator *(matrix x, matrix y){
+    int a[3][3] = {{1, 2, 3}, {1, 0, 0}, {0, 1, 0}};
+    friend matrix operator* (matrix x, matrix y){
         matrix c;
-        memset(c.a, 0, sizeof(c.a));
         FOR(i, 0, 2){
             FOR(j, 0, 2){
-                __int128 sum = 0;
-                FOR(k, 0, 2) {
-                    sum += (__int128)x.a[i][k] * y.a[k][j];
+                __int128_t sum = 0;
+                FOR(k, 0, 2){
+                    sum += ((__int128_t)x.a[i][k] * y.a[k][j]);
+                    sum %= base;
                 }
-                c.a[i][j] = 1ll * (sum % base);
+                c.a[i][j] = 1ll * sum;
             }
         }
         return c;
@@ -58,7 +54,11 @@ signed main(){
     int t; cin >> t;
     while(t--){
         cin >> n >> base;
-        if(n == 1){
+        if(n == 0){
+            cout << 0 << endl;
+            continue;
+        }
+        else if(n == 1){
             cout << 1 % base << endl;
             continue;
         }
@@ -70,15 +70,11 @@ signed main(){
             cout << 3 % base << endl;
             continue;
         }
-        else if(n == 0){
-            cout << 0 << endl;
-            continue;
-        } 
         else{
-            matrix X;
-            matrix ans = binpow(X, n - 3);
-            cout << (3 * ans.a[0][0] + 2 * ans.a[0][1] + ans.a[0][2]) % base << endl;
-        } 
+            matrix x;
+            matrix ans = binpow(x, n - 3);
+            cout << (3*ans.a[0][0] + 2*ans.a[0][1] + ans.a[0][2]) % base << endl;
+        }
     }
 
     return 0;

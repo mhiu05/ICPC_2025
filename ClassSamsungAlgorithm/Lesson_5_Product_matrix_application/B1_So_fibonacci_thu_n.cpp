@@ -4,6 +4,7 @@
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
 #define all(x) x.begin(), x.end()
+#define pf push_front
 #define pb push_back
 #define sz size
 #define vi vector<int>
@@ -22,12 +23,12 @@ using namespace std;
 
 struct matrix{
     int a[2][2];
-    friend matrix operator* (matrix x, matrix y){
+    friend matrix operator * (matrix x, matrix y){
         matrix c;
-        FOR(i, 0, 1){
-            FOR(j, 0, 1){
+        for(int i = 0; i < 2; ++i){
+            for(int j = 0; j < 2; ++j){
                 c.a[i][j] = 0;
-                FOR(k, 0, 1){
+                for(int k = 0; k < 2; ++k){
                     c.a[i][j] += x.a[i][k] * y.a[k][j];
                     c.a[i][j] %= MOD;
                 }
@@ -37,11 +38,11 @@ struct matrix{
     }
 };
 
-matrix binpow(matrix a, int n){
-    if(n == 1) return a;
-    matrix X = binpow(a, n / 2);
+matrix binpow(matrix x, int n){
+    if(n == 1) return x;
+    matrix X = binpow(x, n / 2);
     if(n % 2 == 0) return X * X;
-    else return X * X * a;
+    return X * X * x;
 }
 
 signed main(){
@@ -50,12 +51,11 @@ signed main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
+        matrix x;
+        x.a[0][0] = 1; x.a[0][1] = 1;
+        x.a[1][0] = 1; x.a[1][1] = 0;
 
-        matrix X;
-        X.a[0][0] = 1; X.a[0][1] = 1;
-        X.a[1][0] = 1; X.a[1][1] = 0;
-
-        matrix ans = binpow(X, n);
+        matrix ans = binpow(x, n);
         cout << ans.a[1][0] << endl;
     }
 
