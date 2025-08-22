@@ -18,21 +18,13 @@ const ll MOD = 1e9 + 7;
 const int MAXN = 1e5 + 5;
 const double EPS = 1e-10;
 const int INF = 1e9;
-const int base = 31;
-
-int n, k; 
-string s; 
 
 using namespace std;
 
 signed main(){
     faster;
 
-    int t; cin >> t;
-    while(t--){
-        cin >> n >> k;
-        cin >> s;
-    }
+    
 
     return 0;
 }
