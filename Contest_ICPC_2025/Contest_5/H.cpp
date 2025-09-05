@@ -21,8 +21,8 @@ bool isSuccess(int median) {
     for (int i = r; i <= n; i++) {
         for (int j = c; j <= m; j++) {
             int sum = pre[i][j] - pre[i-r][j] - pre[i][j-c] + pre[i-r][j-c];
-            if (sum > 0) {
-                return true;
+            if (sum > 0) { // số phần tử <= medium lớn hơn số phần tử > medium
+                return true; // => số cần tìm (truth medium) <= medium
             }
         }
     }
