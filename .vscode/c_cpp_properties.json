@@ -6,12 +6,14 @@
         "${workspaceFolder}/**"
       ],
       "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe",
-      "cStandard": "${default}",
-      "cppStandard": "${default}",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
       "intelliSenseMode": "windows-gcc-x64",
       "compilerArgs": [
-        ""
-      ]
+        "-g", // Thêm flag debug
+        "-o", "${fileDirname}/${fileBasenameNoExtension}.exe" // Chỉ định output rõ ràng
+      ],
+      "configurationProvider": "ms-vscode.cpptools"
     }
   ],
   "version": 4

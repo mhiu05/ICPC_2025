@@ -24,9 +24,7 @@ using namespace std;
 signed main(){
     faster;
 
-    int a, b; cin >> a >> b;
-    if(abs(a - b) <= 1) cout << "Bob";
-    else cout << "Alice";
+    
 
     return 0;
 }

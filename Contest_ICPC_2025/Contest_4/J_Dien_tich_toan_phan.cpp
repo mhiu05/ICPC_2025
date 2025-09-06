@@ -1,43 +1,71 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, m;
-int arr[1000][1000];
+using ll = long long;
 
-// Tính diện tích toàn phần của cột có chiều cao h nằm trong 1 ô vuông đơn vị
-int area(int h) {
-    if (h == 0) return 0;
-    return h * 4 + 2;
+const int INF = 1e9 + 7;
+const int MOD = 1e9 + 7;
+const int MAXN = 1e6 + 5;
+
+const int dx[] = {0, 1, 0, -1};
+const int dy[] = {1, 0, -1, 0};
+
+void prepare() {
+    // Nếu cần tiền xử lý thì viết ở đây
 }
 
-// Tính phần diện tích xung quanh chung giữa cột có chiều cao hiện tại (chiều cao h) so với các cột kề nó trước đó
-// Chỉ xét các cột bên trái và phía trên cột hiện tại
-int inter(int i, int j, int h) {
-    if (i == 0 && j == 0) return 0;
-    if (i == 0) return min(h, arr[i][j-1]); // Những "cột" Hàng đầu tiên thì chỉ bị che bởi cột bên trái
-    if (j == 0) return min(h, arr[i-1][j]); // Những "cột" Cột đầu tiên thì chỉ bị che bởi cột phía trên
-    return min(h, arr[i][j-1]) + min(h, arr[i-1][j]);
-}
+void solve() {
+    int n, m;
+    cin >> n >> m;
 
-// Tính tổng diện tích toàn phần của tất cả các cột trong ma trận arr
-int calc() {
-    int ans = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            int s = inter(i, j, arr[i][j]);
-            ans += area(arr[i][j]) - s * 2;
+    vector<vector<int>> H(n + 2, vector<int>(m + 2, 0));
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> H[i][j];
         }
     }
-    return ans;
+
+    long long res = 0;
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (H[i][j] == 0) continue;
+
+            // Cộng mặt trên + mặt dưới
+            res += 2;
+
+            // Kiểm tra 4 hướng
+            for (int dir = 0; dir < 4; dir++) {
+                int ni = i + dx[dir];
+                int nj = j + dy[dir];
+
+                if (H[i][j] > H[ni][nj]) {
+                    res += H[i][j] - H[ni][nj];
+                }
+            }
+        }
+    }
+
+    cout << res << '\n';
 }
 
 int main() {
-    int t; cin >> t;
-    while (t--) {
-        cin >> n >> m;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) cin >> arr[i][j];
-        }
-        cout << calc() << endl;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    if (fopen("VanLam.inp", "r")) {
+        freopen("VanLam.inp", "r", stdin);
+        freopen("VanLam.out", "w", stdout);
     }
+
+    prepare();
+
+    int testCases = 1;
+    cin >> testCases;
+    while (testCases--) {
+        solve();
+    }
+
+    return 0;
 }

@@ -1,0 +1,72 @@
+1: gen test cho số nguyên:
+import random
+
+def gen_integers():
+    N = random.randint(1, 20)  # số phần tử
+    print(N)
+    arr = [str(random.randint(1, 100)) for _ in range(N)]
+    print(" ".join(arr))
+
+if __name__ == "__main__":
+    gen_integers()
+
+
+2: gen test cho chuỗi ký tự:
+import random
+import string
+
+def gen_string():
+    n = random.randint(1, 20)
+    s = "".join(random.choice(string.ascii_lowercase) for _ in range(n))
+    print(n)
+    print(s)
+
+if __name__ == "__main__":
+    gen_string()
+
+3: gen test cho nhiều testcase:
+import random
+
+def gen_multi():
+    T = random.randint(1, 5)
+    print(T)
+    for _ in range(T):
+        n = random.randint(1, 10)
+        arr = [str(random.randint(1, 50)) for _ in range(n)]
+        print(n)
+        print(" ".join(arr))
+
+if __name__ == "__main__":
+    gen_multi()
+
+4: gen test cho đồ thị vô hướng có trọng số:
+import random
+
+def gen_graph():
+    n = random.randint(2, 10)
+    m = random.randint(n-1, n*(n-1)//2)  # đủ để connected
+    print(n, m)
+    edges = set()
+    while len(edges) < m:
+        u = random.randint(1, n)
+        v = random.randint(1, n)
+        if u == v: continue
+        if (u, v) in edges or (v, u) in edges: continue
+        w = random.randint(1, 100)
+        edges.add((u, v))
+        print(u, v, w)
+
+if __name__ == "__main__":
+    gen_graph()
+
+5: max stress test (biên lớn):
+import random
+
+def gen_big():
+    N = 200000
+    print(N)
+    arr = [str(random.randint(1, 10**6)) for _ in range(N)]
+    print(" ".join(arr))
+
+if __name__ == "__main__":
+    gen_big()

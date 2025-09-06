@@ -24,7 +24,34 @@ using namespace std;
 signed main(){
     faster;
 
-    
+    int n, c; cin >> n >> c;
+    int a[n + 1];
+    FOR(i, 1, n) cin >> a[i];
+    sort(a + 1, a + n + 1);
+
+    if(n == 1){
+        if(a[1] <= c){
+            cout << 1;
+        }
+        else cout << 0;
+        return 0;
+    }
+
+    int cnt = 0;
+    int i = 1, j = n;
+    while(i <= j){
+        if(a[i] + a[j] <= c){
+            ++cnt;
+            ++i;
+            --j;
+        }
+        else{
+            ++cnt;
+            --j;
+        }
+    }
+
+    cout << cnt;
 
     return 0;
 }

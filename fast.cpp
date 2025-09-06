@@ -21,12 +21,27 @@ const int INF = 1e9;
 
 using namespace std;
 
+int cmp(string a, string b){
+    return a + b > b + a;
+}
+
 signed main(){
     faster;
 
-    int a, b; cin >> a >> b;
-    if(abs(a - b) <= 1) cout << "Bob";
-    else cout << "Alice";
+    int n; cin >> n;
+    string s[n];
+    FOR(i, 0, n - 1){
+        int x; cin >> x;
+        s[i] = to_string(x);
+    }
+    sort(s, s + n, greater<string>());
+    sort(s, s + min(3*1ll, n), cmp);
+
+    string ans = "";
+    FOR(i, 0, min(3*1ll, n) - 1){
+        ans += s[i];
+    }
+    cout << ans;
 
     return 0;
 }
