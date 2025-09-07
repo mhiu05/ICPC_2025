@@ -24,7 +24,25 @@ using namespace std;
 signed main(){
     faster;
 
-    
+    int n; cin >> n;
+    string s; cin >> s;
+    s = " " + s;
+
+    int cnt = 1;
+    int ans = 0;
+    FOR(i, 2, n){
+        if(s[i] == s[i - 1]){
+            ++cnt;
+        }
+        else{
+            ans += cnt * (cnt - 1) / 2;
+            cnt = 1;
+        }
+    }
+
+    if(cnt != 0) ans += cnt * (cnt - 1) / 2;
+
+    cout << ans;
 
     return 0;
 }

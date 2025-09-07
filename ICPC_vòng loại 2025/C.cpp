@@ -24,7 +24,24 @@ using namespace std;
 signed main(){
     faster;
 
+    int n; cin >> n;
+    int a[n + 1];
+    FOR(i, 1, n) cin >> a[i];
+    sort(a + 1, a + n + 1);
+    int F[n + 1] = {0};
+    FOR(i, 1, n){
+        F[i] = F[i - 1] + a[i];
+    }
+
     
+    // FOR(i, 1, n) cout << F[i] << endl;
+    int sum = 0;
+    FOR(i, 1, n){
+        // cout << F[n] << " " << F[i] << " " << a[i] << endl;
+        sum += F[n] - F[i] - (n - i) * a[i];
+    }
+
+    cout << sum;
 
     return 0;
 }
