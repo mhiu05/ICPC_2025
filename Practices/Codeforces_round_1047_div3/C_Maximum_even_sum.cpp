@@ -22,28 +22,21 @@ const int INF = 1e9;
 
 using namespace std;
 
-vector<ii> ans;
-
-void solve(int x, int k){
-    queue<ii> q;
-    q.push({x, 0});
-    
-    while(!q.empty()){
-        ii a = q.front(); q.pop();
-
-        int X = a.fi, cnt = a.sc;
-        // cout << X << " " << cnt << endl;
-
-        if(cnt == k){
-            ans.pb({X, cnt});
-        }
-        if(cnt == k + 1) break;
-
-        if(X > 1 && X % 3 == 1) q.push({(X - 1) / 3, cnt + 1});
-
-        q.push({X * 2, cnt + 1});
+void solve(int a, int b){
+    int x = a * b + 1;
+    if(x % 2 == 0){
+        cout << x << endl;
     }
-
+    else if(b % 2 == 0){
+        int y = a * b / 2 + 2;
+        if(y % 2 == 0){
+            cout << y << endl;
+        }
+        else cout << -1 << endl;
+    }
+    else {
+        cout << -1 << endl;
+    }
 }
 
 signed main(){
@@ -51,12 +44,9 @@ signed main(){
 
     int t; cin >> t;
     while(t--){
-        ans.clear();
-        int x, k; cin >> k >> x;
-        solve(x, k);
-        sort(rall(ans));
-        cout << ans[0].fi << endl;
-    }    
+        int a, b; cin >> a >> b;
+        solve(a, b);
+    }
 
     return 0;
-}
+}   
