@@ -29,13 +29,13 @@ signed main(){
     FOR(i, 1, n) cin >> a[i];
     sort(a + 1, a + n + 1);
 
-    if(n == 1){
-        if(a[1] <= c){
-            cout << 1;
-        }
-        else cout << 0;
-        return 0;
-    }
+    // if(n == 1){
+    //     if(a[1] <= c){
+    //         cout << 1;
+    //     }
+    //     else cout << 0;
+    //     return 0;
+    // }
 
     int cnt = 0;
     int i = 1, j = n;

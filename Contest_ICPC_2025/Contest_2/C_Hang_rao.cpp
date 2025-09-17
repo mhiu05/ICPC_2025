@@ -2,7 +2,7 @@
 using namespace std;
 using ll = long long;
 
-// ChatGPT (Đã AC)
+// Graph + geometry
 
 struct Point {
     double x, y;

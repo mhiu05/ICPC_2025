@@ -21,6 +21,11 @@ const int INF = 1e9;
 
 using namespace std;
 
+// Trạng thái thua: |X + Y| <= 1, thắng: |X + Y| > 1.
+// Chứng minh từ được: |X + Y| <= 1 dù chọn thế nào cũng ra |X + Y| > 1
+//                     |X + Y| > 1 có thể chọn để thành |X + Y| <= 1
+
+
 signed main(){
     faster;
 

@@ -1,65 +1,86 @@
 #include <bits/stdc++.h>
+#define ll long long
+#define int long long
+#define FOR(i,a,b) for (int i = (a); i <= (b); i++)
+#define FOD(i,a,b) for (int i = (a); i >= (b); i--)
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define pf push_front
+#define pb push_back
+#define sz size
+#define vi vector<int>
+#define vvi vector<vector<int>>
+#define ii pair<int,int>
+#define fi first 
+#define sc second
+#define faster ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
+
+const ll MOD = 1e9 + 7;
+const int MAXN = 1e5 + 5;
+const double EPS = 1e-10;
+const int INF = 1e18;
+
 using namespace std;
-using ll = long long;
- 
-// Nhiệm vụ: Với N số trong mảng A, bỏ A[i] đi thì max và min của những số còn lại là gì?
-auto rmov(const vector<ll> &a) {
-    int n = a.size();
-    vector<ll> preMax(n), preMin(n), sufMax(n), sufMin(n);
-    //preMax[i] = max(a[0], a[1], ..., a[i]), preMin[i] = min(a[0], a[1], ..., a[i]), sufMax[i] = max(a[i], a[i+1], ..., a[n-1]), sufMin[i] = min(a[i], a[i+1], ..., a[n-1])
-    preMax[0] = preMin[0] = a[0];
-    for (int i = 1; i < n; i++) {
-        preMax[i] = max(preMax[i-1], a[i]);
-        preMin[i] = min(preMin[i-1], a[i]);
+
+// Biến thể diameter trong metric Manhattan
+// Đặt u = x + y, v = x - y. Khi đó d(A, B) = |x_A - x_B| + |y_A - yB| = max(|u_A - u_B|, |v_A - v_B|)
+// Khi đó khoảng cách lớn nhất giữa 2 điểm bất kỳ là: D =  max(max(u) - min(u), max(v) - min(v))
+// Yêu cầu: Cần xóa đi 1 điểm sao cho D min (Cực tiểu hóa D)
+
+
+// trả về A[{}] với A[i] là {max, min} của a[] khi xóa a[i]
+vector<ii> rmov(vi a, int n){
+    vi preMin(n + 1), preMax(n + 1), sufMin(n + 1), sufMax(n + 1);
+
+    preMin[1] = a[1];
+    preMax[1] = a[1];
+    FOR(i, 2, n){
+        preMin[i] = min(preMin[i - 1], a[i]);
+        preMax[i] = max(preMax[i - 1], a[i]);
     }
-    sufMax[n - 1] = sufMin[n - 1] = a[n - 1];
-    for (int i = n - 2; i >= 0; i--) {
-        sufMax[i] = max(sufMax[i+1], a[i]);
-        sufMin[i] = min(sufMin[i+1], a[i]);
+
+    sufMin[n] = a[n];
+    sufMax[n] = a[n];
+    FOD(i, n - 1, 1){
+        sufMin[i] = min(sufMin[i + 1], a[i]);
+        sufMax[i] = max(sufMax[i + 1], a[i]);
     }
-    vector<pair<ll,ll>> res(n); ///res[i] = {max, min} khi bỏ a[i]
-    //Bỏ a[i] --> max = {max (a[0], a[1], ..., a[i - 1]), max (a[i + 1], a[i + 2], ..., a[n - 1])} = max(preMax[i - 1], sufMax[i + 1]), min = {min (a[0], a[1], ..., a[i - 1]), min (a[i + 1], a[i + 2], ..., a[n - 1])} = min(preMin[i - 1], sufMin[i + 1])
-    for (int i = 0; i < n; i++) {
-        ll mx = LLONG_MIN, mn = LLONG_MAX;
-        if (i > 0) { 
-            mx = max(mx, preMax[i - 1]); 
-            mn = min(mn, preMin[i - 1]); 
+
+    vector<ii> res(n + 1);
+    FOR(i, 1, n){
+        if(i == 1){
+            res[i] = {sufMax[i], sufMin[i]};
         }
-        if (i + 1 < n) { 
-            mx = max(mx, sufMax[i + 1]); 
-            mn = min(mn, sufMin[i + 1]); 
+        else if(i == n){
+            res[i] = {preMax[i], preMin[i]};
         }
-        res[i] = {mx, mn};
+        else{
+            res[i] = {max(preMax[i - 1], sufMax[i + 1]), min(preMin[i - 1], sufMin[i + 1])};
+        }
     }
     return res;
 }
- 
-int main() {
-    int N; cin >> N;
-    vector<ll> u(N), v(N);
-    for (int i = 0; i < N; i++) {
-        ll x, y; cin >> x >> y;
+
+signed main(){
+    faster;
+
+    int n; cin >> n;
+    vi u(n + 1), v(n + 1);
+    FOR(i, 1, n){
+        int x, y; cin >> x >> y;
         u[i] = x + y;
         v[i] = x - y;
     }
-    auto ru = rmov(u);
-    auto rv = rmov(v);
-    ll ans = LLONG_MAX;
-    for (int i = 0; i < N; i++) {
-        ll du = ru[i].first - ru[i].second;
-        ll dv = rv[i].first - rv[i].second;
+
+    // tính  min (D =  max(max(u) - min(u), max(v) - min(v)))
+    vector<ii> ru = rmov(u, n), rv = rmov(v, n);
+    int ans = INF;
+    FOR(i, 1, n){
+        int du = ru[i].fi - ru[i].sc;
+        int dv = rv[i].fi - rv[i].sc;
         ans = min(ans, max(du, dv));
     }
-    cout << ans << "\n";
+    cout << ans;
+    
+    return 0;
 }
-/*
-Ý tưởng: Khoảng cách Manhattan --> Khoảng cách Chebyshev
-dM (A, B) = |xA - xB| + |yA - yB|
-- Đặt u = x + y, v = x - y, xA - xB = dx, yA - yB = dy 
---> uA - uB = (xA + yA) - (xB + yB) = (xA - xB) + (yA - yB) = dx + dy
---> vA - vB = (xA - yA) - (xB - yB) = (xA - xB) - (yA - yB) = dx - dy
---> dM (A, B) = |dx| + |dy| = max(|dx + dy|, |dx - dy|) = max(|uA - uB|, |vA - vB|)
-- Ta cần dM đạt max, thì 2 số trong hàm max phải đạt max --> Cần xác định được uMax, uMin, vMax, vMin 
-- ru = {C[i], D[i]}, với C[i] và D[i] là max và min của các số trong ru khi bỏ u[i] đi
-- rv = {E[i], F[i]}, với E[i] và F[i] là max và min của các số trong rv khi bỏ v[i] đi
-*/
