@@ -1,8 +1,5 @@
-#include <bits/stdc++.h>
-using namespace std;
 
-// ứng dụng thuật toán KMP (Documents/KMP)
-
+// tính toán mảng LPS (Longest Prefix Suffix) cho chuỗi pattern
 vector<int> computeLPS(const string &pattern) {
     int n = pattern.size();
     vector<int> lps(n, 0);
@@ -24,6 +21,7 @@ vector<int> computeLPS(const string &pattern) {
     return lps;
 }
  
+// Kiểm tra xem chuỗi pattern có xuất hiện như một chuỗi con trong chuỗi text hay không.
 bool isSubstring(const string &text, const string &pattern) {
     if (pattern.empty()) return true;
     int n = pattern.size();
@@ -47,8 +45,8 @@ bool isSubstring(const string &text, const string &pattern) {
     }
     return false;
 }
-
-
+ 
+// Tìm độ dài phần trùng nhau lớn nhất giữa hậu tố của chuỗi a và tiền tố của chuỗi b.
 int findOverlap(const string &a, const string &b) {
     int n = b.size();
     if (n == 0) return 0;
@@ -63,29 +61,4 @@ int findOverlap(const string &a, const string &b) {
         }
     }
     return j;
-}
- 
-string mergeStrings(const string &a, const string &b) {
-    if (isSubstring(a, b)) return a;
-    if (isSubstring(b, a)) return b;
-    int overlap = findOverlap(a, b);
-    return a + b.substr(overlap);
-}
- 
-int main() {
-    vector<string> s(3);
-    for (int i = 0; i < 3; i++) {
-        cin >> s[i];
-    }
- 
-    vector<int> indices = {0, 1, 2};
-    int minLength = INT_MAX;
-    do {
-        string merged = mergeStrings(s[indices[0]], s[indices[1]]);
-        merged = mergeStrings(merged, s[indices[2]]);
-        minLength = min(minLength, (int)merged.size());
-    } while (next_permutation(indices.begin(), indices.end()));
- 
-    cout << minLength << endl;
-    return 0;
 }

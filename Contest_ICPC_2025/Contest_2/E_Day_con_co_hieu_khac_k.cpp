@@ -1,75 +1,92 @@
 #include <bits/stdc++.h>
+#define ll long long
+#define int long long
+#define FOR(i,a,b) for (int i = (a); i <= (b); i++)
+#define FOD(i,a,b) for (int i = (a); i >= (b); i--)
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define pf push_front
+#define pb push_back
+#define sz size
+#define vi vector<int>
+#define vvi vector<vector<int>>
+#define ii pair<int,int>
+#define fi first 
+#define sc second
+#define faster ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
+
+const ll MOD = 998244353;
+const int MAXN = 1e5 + 5;
+const double EPS = 1e-10;
+const int INF = 1e9;
+
 using namespace std;
 
-using ll = long long;
-const int MOD = 998244353;
+// Chia thành nhiều nhóm, mỗi nhóm gồm: x, x + k, x + 2k,....
+// Tính số cách chọn trong mỗi nhóm, ans = tích các số cách chọn đó
 
-int main() {
-    int t; cin >> t;
-    while (t--) {
-        int n, k;  cin >> n >> k;
-        vector<int> a(n);
-        map<int, int> freq;
-        for (int& x : a) {
-            cin >> x;
-            freq[x]++;
-        }
-        // Tiền xử lý lũy thừa 2
-        int max_count = 0;
-        for (auto& [x, cnt] : freq) max_count = max(max_count, cnt);
-        vector<ll> pow2(max_count + 1, 1);
-        for (int i = 1; i <= max_count; i++) pow2[i] = (pow2[i - 1] * 2) % MOD;
-        // Gom các số theo phần dư modulo k
-        map<int, vector<int>> gr;
-        for (auto& [x, _] : freq) gr[x % k].push_back(x);
-        // Xét từng nhóm đồng dư với k. Bởi vì đã không cùng số dư thì đương nhiên hiệu không thể bằng k
-        ll res = 1;
-        for (auto& [_, group] : gr) {
-            sort(group.begin(), group.end());
-            vector<vector<int>> seg;
-            vector<int> cur;
-            //Chia mỗi đoạn con thành các đoạn liên tiếp, sao cho mỗi đoạn con lập thành CSC công sai k
-            for (int x : group) {
-                if (cur.empty() || x - cur.back() == k) cur.push_back(x);
-                else {
-                    seg.push_back(cur);
-                    cur = {x};
-                }
-            }
-            if (!cur.empty()) seg.push_back(cur);
-            ll total = 1; //Số đoạn con theo yêu cầu trong mỗi nhóm ĐỒNG DƯ
-            // Tính số cách chọn phần tử từ từng dãy CSC công sai k sao cho không chọn 2 phần tử liên tiếp trong đó
-            for (auto& seg : seg) {
-                ll dp0, dp1; //dp0: Chọn từ đầu đến phần tử hiện tại mà không chọn phần tử hiện tại
-                for (int i = 0; i < seg.size(); ++i) {
-                    //Xét từng phần tử trong đoạn con, giả sử phần tử thứ i xuất hiện freq[x_i] = S lần
-                    //Mỗi dãy con khác rỗng trích xuất từ S số này luôn thoả mãn vì chênh lệch giữa mọi cặp phần tử là 0
-                    //Số cách chọn dãy: 2^S - 1
-                    int x = seg[i];
-                    ll ways = (pow2[freq[x]] - 1 + MOD) % MOD;
-                    if (i == 0) {
-                        //Với phần tử đầu tiên: 1 cách không chọn gì, hoặc trích dãy con từ S số seg[i]
-                        dp0 = 1;
-                        dp1 = ways;
-                    } else {
-                        //dp0: Chọn từ đầu đến i - 1 mà không chọn seg_(i - 1), dp1: có chọn seg_(i - 1)
-                        ll new_dp0 = (dp0 + dp1) % MOD; //Không chọn thg hiện tại --> Kế thừa mọi cái cũ đã có
-                        ll new_dp1 = (dp0 * ways) % MOD; //Chọn thg hiện tại --> Không được chọn thg kề trước đó
-                        dp0 = new_dp0;
-                        dp1 = new_dp1;
-                    }
-                }
-                total = (total * ((dp0 + dp1) % MOD)) % MOD;
-            }
-            res = (res * total) % MOD;
-        }
-        cout << (res - 1 + MOD) % MOD << '\n';
+int binpow(int x, int n){
+    if(n == 1) return (x % MOD);
+    if(n == 0) return 1;
+    int X = binpow(x, n / 2);
+    if(n % 2 == 0){
+        return (X % MOD) * (X % MOD) % MOD;
+    }
+    else{
+        return (((X % MOD) * (X % MOD)) % MOD) * (x % MOD) % MOD;
     }
 }
-/*Cách giải: 
-1. Đếm số lần xuất hiện của mỗi phần tử
-2. Chia các phần tử phân biệt (Chưa kể số lần xuất hiện), những cái nào đồng dư với k thì cùng một nhóm (gr)
-Bởi vì không cùng số dư thì CHẮC CHẮN hiệu không thể bằng k
-3. Với mỗi nhóm đồng dư gr, ta sắp xếp lại, tiếp tục chia thành các đoạn con liên tiếp seg, sao cho mỗi seg lập thành 1 CSC công sai k
-4. Với mỗi seg, ta tính số cách tạo ra dãy con sao cho hiệu giữa 2 cặp bất kì khác k (Dùng dp)
-*/
+
+void solve(){
+    int n, k; cin >> n >> k;
+    int a[n + 1];
+
+    map<int, int> mp;
+    FOR(i, 1, n) {
+        cin >> a[i];
+        mp[a[i]]++;
+    }
+
+    vi A; // chứa các phần tử riêng biệt trong a[] theo thứ tự tăng dần
+    for(auto it : mp){
+        A.pb(it.fi);
+    }
+
+    set<int> visited;
+    int ans = 1;
+    FOR(i, 0, A.sz() - 1){
+        if(visited.count(A[i])) continue;
+
+        vi v;
+        int cur = A[i];
+        while(mp.count(cur)){
+            v.pb(cur);
+            visited.insert(cur);
+            cur += k;
+        }
+
+        int dp0 = 1, dp1 = 0;
+        FOR(j, 0, v.sz() - 1){
+            int new_dp0 = (dp0 + dp1) % MOD;
+            int new_dp1 = (dp0 * (binpow(2, mp[v[j]]) - 1)) % MOD;
+            dp0 = new_dp0;
+            dp1 = new_dp1;
+        }
+        int ways = (dp0 + dp1) % MOD;
+        ans *= ways;
+        ans %= MOD;
+    }
+    ans = (ans - 1 + MOD) % MOD;
+    cout << ans << endl;
+}
+
+signed main(){
+    faster;
+
+    int t; cin >> t;
+    while(t--){
+        solve();
+    }
+
+    return 0;
+}

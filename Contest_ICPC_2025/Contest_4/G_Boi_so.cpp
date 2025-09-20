@@ -1,83 +1,93 @@
 #include <bits/stdc++.h>
+#define ll long long
+#define int long long
+#define FOR(i,a,b) for (int i = (a); i <= (b); i++)
+#define FOD(i,a,b) for (int i = (a); i >= (b); i--)
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define pf push_front
+#define pb push_back
+#define sz size
+#define vi vector<int>
+#define vvi vector<vector<int>>
+#define ii pair<int,int>
+#define fi first 
+#define sc second
+#define faster ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
+
+const ll MOD = 1e9 + 7;
+const int MAXN = 1e5 + 5;
+const double EPS = 1e-10;
+const int INF = 1e9;
+
 using namespace std;
-using int64 = long long;
 
-static inline int64 floordiv(int64 a, int64 b) { // b>0
-    if (a >= 0) return a / b;
-    return - ( (-a + b - 1) / b );
-}
-static inline int64 ceildiv(int64 a, int64 b) { // b>0
-    if (a >= 0) return (a + b - 1) / b;
-    return - ( (-a) / b );
-}
+// Chỉ cần xét 1 <= k <= k_max = (d - 1) / (c - b)
+// ans = k_max - số k bị cấm
+// Số k bị cấm là:
+// a + b.k <= m.d <= a + c.k
+// => Tìm k theo m: (m.d - a) / c <= k <= (m.d - a) / b
+// Với m: (a + b) / d <= m <= (a + c.k_max) / d
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
 
-    int T; 
-    if(!(cin >> T)) return 0;
-    while (T--) {
-        long long A,B,C,D;
-        cin >> A >> B >> C >> D;
+signed main(){
+    faster;
 
-        const long long diff = C - B;
-        if (diff <= 0) { cout << 0 << '\n'; continue; }
+    int t; cin >> t;
+    while(t--){
+        int a, b, c, d; cin >> a >> b >> c >> d;
+        
+        int k_max = (d - 1) / (c - b);
 
-        long long Kmax = (D - 1) / diff;
-        if (Kmax <= 0) { cout << 0 << '\n'; continue; }
+        int ans = 0;
 
-        // m range that can produce intervals intersecting [1..Kmax]
-        long long mL = ceildiv(A + B, D);
-        long long mR = floordiv(A + C * Kmax, D);
-        if (mL > mR) {                      // không có bội nào “đi vào” dải K cần xét
-            cout << Kmax << '\n';
+        int m_l = (a + b + d - 1) / d, m_r = (a + c * k_max) / d;
+
+        if(m_l > m_r){
+            ans += k_max;
+            cout << ans << endl;
             continue;
         }
 
-        long long banned = 0;
-        long long curL = (long long)4e18, curR = -(long long)4e18; // interval đang merge
+        vector<ii> v; // chứa đoạn bị cấm
+        FOR(m, m_l, m_r){
+            if (m * d < a) continue;
+            int k_l = (m * d - a + c - 1) / c, k_r = (m * d - a) / b;
+            int l = max(1LL, k_l), r = min(k_max, k_r);
+            if(l <= r){
+                v.pb({l, r});
+            }
+        }
 
-        for (long long m = mL; m <= mR; ) {
-            // L = ceil((mD - A)/C) = floor((mD - A + C - 1)/C)
-            long long L = ( (m*D - A + C - 1) ) / C;
-            // R = floor((mD - A)/B)
-            long long R = ( (m*D - A) ) / B;
-
-            // cắt với [1..Kmax]
-            long long l = max(1LL, L);
-            long long r = min(Kmax, R);
-
-            // tính m lớn nhất còn giữ nguyên L và R tại m hiện tại
-            // Với F(m)=floor((D*m + q)/r) không đổi khi m <= ( r*(F+1) - q - 1 )/D
-            // cho L: qL = -A + (C-1), rL = C
-            long long qL = -A + (C - 1);
-            long long Llast = ( C * (L + 1) - qL - 1 ) / D;
-
-            // cho R: qR = -A, rR = B
-            long long qR = -A;
-            long long Rlast = ( B * (R + 1) - qR - 1 ) / D;
-
-            long long upto = min({Llast, Rlast, mR});
-
-            if (l <= r) {
-                // vì trong đoạn [m..upto], [L,R] cố định → chỉ cần merge 1 lần
-                if (curL > curR) {      // rỗng
-                    curL = l; curR = r;
-                } else if (l > curR + 1) {
-                    banned += (curR - curL + 1);
-                    curL = l; curR = r;
-                } else {
-                    curR = max(curR, r);
+        // gộp các khoảng bị cấm
+        sort(all(v));
+        int banned = 0;
+        int cur_l = -1, cur_r = -1;
+        for(auto it : v){
+            int l = it.fi, r = it.sc;
+            if(cur_l == -1){
+                cur_l = l;
+                cur_r = r;
+            }
+            else{
+                if(l <= cur_r + 1){
+                    cur_r = max(r, cur_r);
+                }
+                else{
+                    banned += cur_r - cur_l + 1;
+                    cur_l = l;
+                    cur_r = r;
                 }
             }
-            m = upto + 1;
         }
-        if (curL <= curR) banned += (curR - curL + 1);
 
-        long long ans = Kmax - banned;
-        if (ans < 0) ans = 0;
-        cout << ans << '\n';
+        if(cur_l != -1){
+            banned += cur_r - cur_l + 1;
+        }
+
+        ans += k_max - banned;
+        cout << ans << endl;
     }
+
     return 0;
 }

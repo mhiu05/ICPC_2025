@@ -4,6 +4,7 @@
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
 #define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 #define pf push_front
 #define pb push_back
 #define sz size
@@ -21,31 +22,33 @@ const int INF = 1e9;
 
 using namespace std;
 
-void solve(string s){
-    int cnt = 0, idx = -1;
+void solve(){
+    string s; cin >> s;
+    
+    int ans = 0, idx = -1;
     stack<int> st;
     int n = s.sz();
     FOR(i, 0, n - 1){
         if(s[i] == '(') st.push(i);
-        else if(s[i] == '*') idx = i;
+        else if(s[i] == '*'){
+            idx = i;
+        }
         else{
             if(!st.empty()){
-                int j = st.top();
-                st.pop();
-                if(j < idx) ++cnt;
-            }
+                int j = st.top(); st.pop();
+                if(j < idx) ++ans;
+            }   
         }
     }
-    cout << cnt << endl;
+    cout << ans << endl;
 }
 
 signed main(){
     faster;
 
-    int t; cin >> t;
+    int t; cin >>t;
     while(t--){
-        string s; cin >> s;
-        solve(s);
+        solve();
     }
 
     return 0;

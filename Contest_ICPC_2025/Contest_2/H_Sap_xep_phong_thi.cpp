@@ -4,6 +4,8 @@
 #define FOR(i,a,b) for (int i = (a); i <= (b); i++)
 #define FOD(i,a,b) for (int i = (a); i >= (b); i--)
 #define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define pf push_front
 #define pb push_back
 // #define sz size
 #define vi vector<int>
@@ -20,30 +22,32 @@ const int INF = 1e9;
 
 using namespace std;
 
-int n, m;
-int parent[MAXN], sz[MAXN];
+int parent[MAXN+5];
+int sz[MAXN+5];
 
-void make_set(int v){
+void make_set(int v) {
     parent[v] = v;
     sz[v] = 1;
 }
 
-int find_set(int v){
-    if(v == parent[v]) return v;
-    int p = find_set(parent[v]);
+int find_set(int v) {
+    if (v == parent[v]) return v; 
+    int p = find_set(parent[v]); 
     parent[v] = p;
     return p;
 }
 
-void union_set(int a, int b){
+void union_sets(int a, int b) {
     a = find_set(a);
     b = find_set(b);
-    if(a != b){
-        if(sz[a] < sz[b]) swap(a, b);
+    if (a != b) {
+        if (sz[a] < sz[b]) swap(a, b); 
         parent[b] = a;
-        sz[a] += sz[b];
+        sz[a] += sz[b]; 
     }
-} 
+}   
+
+int n, m;
 
 signed main(){
     faster;
@@ -52,11 +56,14 @@ signed main(){
     FOR(i, 1, n){
         make_set(i);
     }
-
     FOR(i, 1, m){
-        int u, v; cin >> u >> v;
-        union_set(u, v);
+        int x, y; cin >> x >> y;
+        union_sets(x, y);
     }
-    cout << *max_element(sz + 1, sz + n + 1);
+
+    int ans = 0;
+    FOR(i, 1, n) ans = max(ans, sz[i]);
+    cout << ans;
+
     return 0;
 }

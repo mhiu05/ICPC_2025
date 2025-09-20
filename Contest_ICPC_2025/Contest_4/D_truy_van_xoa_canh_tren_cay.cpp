@@ -73,6 +73,5 @@ int main() {
             children[heavy_child].insert({-sz[u], u});
         }
     }
-
     return 0;
 }
